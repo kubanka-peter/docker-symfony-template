@@ -1,4 +1,4 @@
-You can use this template to start a symfony project with nginx and mysql.
+You can use this template to start a project with traefik proxy.
 [how to use github templates](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template)
 
 Proxy
