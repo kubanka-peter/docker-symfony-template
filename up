@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ ! -f ./traefik/certs/key.pem ]; then
+    ./create-self-signed-certs
+fi
+
+docker-compose up -d --build --remove-orphans

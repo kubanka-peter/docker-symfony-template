@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+
+    proxy:
+        image: traefik:latest
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./traefik/certs:/certs
+            - ./traefik/conf:/conf
+        command:
+            - "--api.insecure=true"
+            - "--providers.docker=true"
+            - "--providers.docker.watch=true"
+            - "--providers.docker.exposedbydefault=false"
+            - "--entrypoints.web.address=:80"
+            - "--entrypoints.websecure.address=:443"
+            - "--log.level=DEBUG"
+            - "--accessLog"
+            - "--api"
+            - "--providers.file.directory=/conf/"
+            - "--providers.file.watch=true"
+        labels:
+            - "traefik.enable=true"
+
+            - "traefik.http.routers.proxy.rule=Host(`traefik.${DOMAIN}`)"
+            - "traefik.http.routers.proxy.entrypoints=websecure"
+            - "traefik.http.routers.proxy.service=api@internal"
+            - "traefik.http.routers.proxy.tls=true"
+
+            - "traefik.http.routers.proxy-http.rule=Host(`traefik.${DOMAIN}`)"
+            - "traefik.http.routers.proxy-http.entrypoints=web"
+            - "traefik.http.routers.proxy-http.service=api@internal"

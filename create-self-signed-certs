@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+source .env
+
+if ! command -v mkcert &> /dev/null
+then
+    echo "mkcert could not be found"
+    echo "You have to install it: https://github.com/FiloSottile/mkcert"
+    exit
+fi
+
+mkcert -install
+mkcert -key-file ./traefik/certs/key.pem -cert-file ./traefik/certs/cert.pem "$DOMAIN" "*.$DOMAIN"
