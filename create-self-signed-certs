@@ -2,6 +2,8 @@
 
 source .env
 
+echo "======== GENEREATE SELF SIGNED CERTS ========";
+
 if ! command -v mkcert &> /dev/null
 then
     echo "mkcert could not be found"
@@ -11,3 +13,5 @@ fi
 
 mkcert -install
 mkcert -key-file ./traefik/certs/key.pem -cert-file ./traefik/certs/cert.pem "$DOMAIN" "*.$DOMAIN"
+
+echo "======== END GENEREATE SELF SIGNED CERTS ========";

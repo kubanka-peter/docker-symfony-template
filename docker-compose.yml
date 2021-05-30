@@ -26,11 +26,11 @@ services:
         labels:
             - "traefik.enable=true"
 
-            - "traefik.http.routers.proxy.rule=Host(`traefik.${DOMAIN}`)"
+            - "traefik.http.routers.proxy.rule=Host(`proxy.${DOMAIN}`)"
             - "traefik.http.routers.proxy.entrypoints=websecure"
             - "traefik.http.routers.proxy.service=api@internal"
             - "traefik.http.routers.proxy.tls=true"
 
-            - "traefik.http.routers.proxy-http.rule=Host(`traefik.${DOMAIN}`)"
+            - "traefik.http.routers.proxy-http.rule=Host(`proxy.${DOMAIN}`)"
             - "traefik.http.routers.proxy-http.entrypoints=web"
             - "traefik.http.routers.proxy-http.service=api@internal"
