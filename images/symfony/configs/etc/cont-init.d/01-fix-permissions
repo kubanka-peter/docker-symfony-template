@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+echo "===== FIX PERMISSIONS ====="
+
+usermod -u "$USER_ID" www-data
+groupmod -g "$GROUP_ID" www-data
+usermod -d /var/www/ www-data
+chown -Rh www-data:www-data /var/www
+
+echo "www-data new user/group id: $USER_ID / $GROUP_ID"
+echo "===== END FIX PERMISSIONS ====="

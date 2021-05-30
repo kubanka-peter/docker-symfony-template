@@ -34,3 +34,20 @@ services:
             - "traefik.http.routers.proxy-http.rule=Host(`proxy.${DOMAIN}`)"
             - "traefik.http.routers.proxy-http.entrypoints=web"
             - "traefik.http.routers.proxy-http.service=api@internal"
+
+    symfony:
+        build:
+            context: images/symfony
+            target: development
+        environment:
+            USER_ID: ${USER_ID}
+            GROUP_ID: ${GROUP_ID}
+        labels:
+            - "traefik.enable=true"
+
+            - "traefik.http.routers.symfony.rule=Host(`app.${DOMAIN}`)"
+            - "traefik.http.routers.symfony.entrypoints=websecure"
+            - "traefik.http.routers.symfony.tls=true"
+
+            - "traefik.http.routers.symfony-http.rule=Host(`app.${DOMAIN}`)"
+            - "traefik.http.routers.symfony-http.entrypoints=web"

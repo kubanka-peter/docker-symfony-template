@@ -1,5 +1,8 @@
-You can use this template to start a project with traefik proxy.
+You can use this template to start developing a symfony application. 
 [how to use github templates](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template)
+
+It's configured for local development, but with some changes you can use it for production (Dockerfile is multipart, you can use the "base" target, then extend it with your changes),
+but production environments are different for project to project, so you have to configure it for yourself.
 
 Proxy
 =====
@@ -14,20 +17,19 @@ Proxy
 
 **enable proxy for a container**
 
-add the following code to the labels section of the container
+Add the following code to the labels section of the container.
+Dont forget to replace <server> with the unique name of the server, or it will not work.
 
 ```
         labels:
             - "traefik.enable=true"
 
             # enable https
-            - "traefik.http.routers.proxy.rule=Host(`subdomain.${DOMAIN}`)"
-            - "traefik.http.routers.proxy.entrypoints=websecure"
-            - "traefik.http.routers.proxy.service=api@internal"
-            - "traefik.http.routers.proxy.tls=true"
+            - "traefik.http.routers.<server>.rule=Host(`subdomain.${DOMAIN}`)"
+            - "traefik.http.routers.<server>.entrypoints=websecure"
+            - "traefik.http.routers.<server>.tls=true"
 
             # enable http
-            - "traefik.http.routers.proxy-http.rule=Host(`subdomain.${DOMAIN}`)"
-            - "traefik.http.routers.proxy-http.entrypoints=web"
-            - "traefik.http.routers.proxy-http.service=api@internal"
+            - "traefik.http.routers.<server>-http.rule=Host(`subdomain.${DOMAIN}`)"
+            - "traefik.http.routers.<server>-http.entrypoints=web"
 ```
