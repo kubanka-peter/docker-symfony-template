@@ -14,8 +14,8 @@ RUN apt-get update \
     && mkdir -p /var/www/html \
     && mkdir -p /var/run/php \
     && mv /var/www/html/index.nginx-debian.html /var/www/html/index.html \
-    && mkdir -p /var/www/public \
-    && echo "<?php phpinfo(); " >> /var/www/public/index.php \
+    && mkdir -p /var/www/project/public \
+    && echo "<?php phpinfo(); " >> /var/www/project/public/index.php \
     # install cron
     && apt-get install -y --no-install-recommends cron \
     # php prod config
@@ -55,7 +55,7 @@ ENV PHP_OPCACHE_JIT_BUFFER_SIZE="64M"
 ENV PHP_OPCACHE_JIT="tracing"
 
 EXPOSE 80
-WORKDIR /var/www
+WORKDIR /var/www/project
 
 ENTRYPOINT ["/init"]
 

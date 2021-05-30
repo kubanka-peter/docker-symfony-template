@@ -42,6 +42,8 @@ services:
         environment:
             USER_ID: ${USER_ID}
             GROUP_ID: ${GROUP_ID}
+        volumes:
+            - ./project:/var/www/project
         labels:
             - "traefik.enable=true"
 
