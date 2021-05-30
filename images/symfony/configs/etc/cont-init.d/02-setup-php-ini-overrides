@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+echo "===== SETUP PHP OVERRIDES ====="
+
+gomplate --input-dir=/usr/local/etc/php/conf.d.templates --output-dir=/usr/local/etc/php/conf.d
+
+echo "===== END SETUP PHP OVERRIDES ====="

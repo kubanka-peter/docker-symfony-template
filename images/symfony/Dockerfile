@@ -1,9 +1,7 @@
 FROM php:8-fpm as base
 
-ENV USER_ID=1000
-ENV GROUP_ID=1000
-
 ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.1/s6-overlay-amd64-installer /tmp/
+COPY --from=hairyhenderson/gomplate:v3.8.0 /gomplate /bin/gomplate
 
 RUN apt-get update \
     # install S6-Overlay
@@ -20,7 +18,7 @@ RUN apt-get update \
     && echo "<?php phpinfo(); " >> /var/www/public/index.php \
     # install cron
     && apt-get install -y --no-install-recommends cron \
-    # php dev config and symfony dependencies
+    # php prod config
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     # essentials
     && apt-get install -y --no-install-recommends git unzip \
@@ -41,6 +39,20 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 COPY ./configs /
+
+ENV USER_ID=1000
+ENV GROUP_ID=1000
+
+ENV PHP_TIMEZONE="Europe/Budapest"
+ENV PHP_UPLOAD_MAX_FILESIZE="16M"
+ENV PHP_POST_MAX_SIZE="16M"
+ENV PHP_MEMORY_LIMIT="32M"
+ENV PHP_MAX_EXECUTION_TIME="30"
+ENV PHP_OPCACHE_ENABLED="1"
+ENV PHP_OPCACHE_REVALIDATE_FREQ="0"
+ENV PHP_OPCACHE_MEMORY_CONSUMPTION="128M"
+ENV PHP_OPCACHE_JIT_BUFFER_SIZE="64M"
+ENV PHP_OPCACHE_JIT="tracing"
 
 EXPOSE 80
 WORKDIR /var/www
