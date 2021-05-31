@@ -2,8 +2,7 @@ You can use this template to start developing a symfony application.
 [how to use github templates](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template)
 
 It's configured for local development mostly with default settings, but with some changes 
-you can use it for production (Dockerfile is multipart, you can use the "base" target, then extend it with your changes),
-but production environments are different for project to project, so you have to configure it for yourself.
+you can use it for production (Dockerfile is multipart, so you can use the "base" target, then extend it with your changes).
 
 Install
 =======
