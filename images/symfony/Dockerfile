@@ -1,4 +1,4 @@
-FROM php:8-fpm as base
+FROM php:8.1-fpm as base
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.1/s6-overlay-amd64-installer /tmp/
 COPY --from=hairyhenderson/gomplate:v3.8.0 /gomplate /bin/gomplate
@@ -61,11 +61,10 @@ ENTRYPOINT ["/init"]
 
 FROM base AS development
 
-RUN apt-get update \
+ # symfony repo
+RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sources.list.d/symfony-cli.list \
+    && apt-get update \
     # install dev tools
-    && apt-get -y --no-install-recommends install vim-nox mc procps \
+    && apt-get -y --no-install-recommends install vim-nox mc procps symfony-cli \
     # change to dev php.ini
-    && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
-    # symfony
-    && curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+    && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
